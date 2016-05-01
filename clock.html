@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="1000" height="500" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+
+<script>
+
+    var c=document.getElementById("myCanvas");
+    var WatchFace=c.getContext("2d"),Num=c.getContext("2d");  //WatchFace
+    var ctx=c.getContext("2d");
+    Handle=new  Object();
+    Handle.hours=Handle.minutes=Handle.seconds=c.getContext("2d");
+
+    var LineWidth= 1,X= 0.874,Y=0.49;
+    var i=0;
+    ctx.translate(160, 160);
+    DrawWatchFace();
+    DrawNum();
+    setInterval(DrawHandles,200);
+
+
+
+    /**
+     *
+     */
+    function DrawHandles(){
+        ClearHandles();
+        DrawHourHandle();
+        DrawHourHandle();
+        DrawMinutesHandle();
+        DrawSecondsHandle();
+
+    }
+
+  /**
+   * 时针
+   *
+   */
+    function DrawHourHandle(){
+      DataHour=new Date();
+      Handle.hours.rotate((DataHour.getHours()%12)/12*2*Math.PI);
+      Handle.hours.fillRect(0,0,8,-70);
+      Handle.hours.fillStyle="black";
+      Handle.hours.rotate(-(DataHour.getHours()%12)/12*2*Math.PI);
+
+    }
+    /**
+     * 分针
+     */
+    function DrawMinutesHandle(){
+        DataHour=new Date();
+        Handle.minutes.rotate(DataHour.getMinutes()/60*2*Math.PI);
+        Handle.minutes.fillRect(0,0,4,-80);
+        Handle.minutes.fillStyle="black";
+        Handle.minutes.rotate(-DataHour.getMinutes()/60*2*Math.PI);
+    }
+
+    /**
+     * 秒针
+     */
+    function DrawSecondsHandle(){
+        DataHour=new Date();
+        Handle.seconds.rotate(DataHour.getSeconds()/60*2*Math.PI);
+        Handle.seconds.fillRect(0,0,2,-90);
+        Handle.seconds.fillStyle="black";
+        Handle.seconds.rotate(-DataHour.getSeconds()/60*2*Math.PI);
+    }
+
+    /**
+     *
+     * @constructor
+     */
+    function ClearHandles(){
+        WatchFace.beginPath();
+        WatchFace.arc(0,0,90,0,2*Math.PI);
+        WatchFace.fillStyle="white";
+        WatchFace.fill();
+    }
+
+    /**
+     *
+     * @constructor
+     */
+    function DrawWatchFace(){
+        WatchFace.beginPath();
+        WatchFace.arc(0,0,151,0,2*Math.PI);
+        WatchFace.stroke();
+    }
+
+
+    /**
+     *
+     */
+    function DrawNum(){
+        Num.font="30px Verdana";
+        for(count=0;count<12;count++){
+            Num.fillText(count+1,127*Math.cos(Math.PI/3-count*Math.PI/6)-10
+                    ,-127*Math.sin(Math.PI/3-count*Math.PI/6)+10);
+        }
+
+    }
+
+</script>
+
+</body>
+</html>
